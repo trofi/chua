@@ -1,6 +1,6 @@
 TARGET := chua_gen
-CFLAGS := -Wall -Werror -g -O0 
-LIBS   := -lglut -lGL
+CFLAGS := -Wall -Wextra -O2
+LIBS   := -lglut -lGL -lm
 
 SOURCES := $(wildcard *.c)
 OBJECTS := $(SOURCES:.c=.o)
