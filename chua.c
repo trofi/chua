@@ -75,50 +75,47 @@ double C2 = 1.0;
 double C1 = 0.10204;
 */
 
-const int TIMER_DELTA = 3;
-double Gb = -0.714;
-double Ga = -1.143;
-double E =  1.0;
-double L = 0.0625;
-double C2 = 1.0;
-double C1 = 0.10204;
+static const int TIMER_DELTA = 3;
+static double Gb = -0.714;
+static double Ga = -1.143;
+static double E =  1.0;
+static double L = 0.0625;
+static double C2 = 1.0;
+static double C1 = 0.10204;
 
-double R1 = 1.0;
-double R2 = 1.0;
+static double R1 = 1.0;
+static double R2 = 1.0;
 
 
 
 /* Chua variables */
 
-double x_r0 =  0.0; // Vc1
-double y_r0 =  0.1; // Vc2
-double z_r0 =  0.0; // Il
-double x_g0 =  0.1;
-double y_g0 =  0.0;
-double z_g0 =  0.0;
+static double x_r0 =  0.0; // Vc1
+static double y_r0 =  0.1; // Vc2
+static double z_r0 =  0.0; // Il
+static double x_g0 =  0.1;
+static double y_g0 =  0.0;
+static double z_g0 =  0.0;
 
-double time_step = 0.03 ;                     /* Time step in the simulation */
+static double time_step = 0.03 ;                     /* Time step in the simulation */
 
-double red_position[NUM_POINTS][3] ;          /* Path of the red point */
-double grn_position[NUM_POINTS][3] ;          /* Path of the green point */
-int array_index ;                             /* Position in *_position arrays of most recent point */
-double distance = 0.0 ;                       /* Distance between the two points */
+static double red_position[NUM_POINTS][3] ;          /* Path of the red point */
+static double grn_position[NUM_POINTS][3] ;          /* Path of the green point */
+static int array_index ;                             /* Position in *_position arrays of most recent point */
+static double distance = 0.0 ;                       /* Distance between the two points */
 
 /* GLUT variables */
-double yaw = 0.0, pit = 0.0 ;                 /* Euler angles of the viewing rotation */
-double scale = 1.0 ;                          /* Scale factor */
-double xcen = 0.0, ycen = 0.0, zcen = 0.0 ;   /* Coordinates of the point looked at */
+static double xcen = 0.0, ycen = 0.0, zcen = 0.0 ;   /* Coordinates of the point looked at */
 
-int animate = 1 ;                             /* 0 - stop, 1 = go, 2 = single-step */
-
+static int animate = 1 ;                             /* 0 - stop, 1 = go, 2 = single-step */
 
 /******************************************* Functions ******************************************/
-double In (double x)
+static double In (double x)
 {
     return Gb * x + 0.5 * (Ga - Gb) * (fabs (x + E) - fabs (x - E));
 }
 /* The Lorenz Attractor */
-void calc_deriv ( double position[3], double deriv[3] )
+static void calc_deriv ( double position[3], double deriv[3] )
 {
     /* Calculate the Lorenz attractor derivatives */
     deriv[0] = ((position [1]) - (position [0]) / R1 - In (position [0])) / C1;
@@ -126,7 +123,7 @@ void calc_deriv ( double position[3], double deriv[3] )
     deriv[2] = - position [1] / L;
 }
 
-void advance_in_time ( double time_step, double position[3], double new_position[3] )
+static void advance_in_time ( double time_step, double position[3], double new_position[3] )
 {
     // Move a point along the Lorenz attractor
     double deriv0[3], deriv1[3], deriv2[3], deriv3[3] ;
@@ -156,9 +153,7 @@ void advance_in_time ( double time_step, double position[3], double new_position
 
 /* GLUT callbacks */
 
-#define INPUT_LINE_LENGTH 80
-
-void key_cb ( unsigned char key, int x, int y )
+static void key_cb ( unsigned char key, int x, int y )
 {
     int i ;
     //char inputline [ INPUT_LINE_LENGTH ] ;
@@ -202,7 +197,7 @@ void key_cb ( unsigned char key, int x, int y )
 	}
 }
 
-void special_cb ( int key, int x, int y )
+static void special_cb ( int key, int x, int y )
 {
     switch ( key )
 	{
@@ -234,7 +229,7 @@ void special_cb ( int key, int x, int y )
     glutPostRedisplay () ;
 }
 
-void mouse_cb ( int button, int updown, int x, int y )
+static void mouse_cb ( int button, int updown, int x, int y )
 {
     if ( updown == GLUT_DOWN )
 	{
@@ -246,7 +241,7 @@ void mouse_cb ( int button, int updown, int x, int y )
 	}
 }
 
-void draw_curve ( int index, double position [ NUM_POINTS ][3] )
+static void draw_curve ( int index, double position [ NUM_POINTS ][3] )
 {
     int i = index ;
 
@@ -261,7 +256,7 @@ void draw_curve ( int index, double position [ NUM_POINTS ][3] )
     glEnd () ;
 }
 
-void display_cb ( void )
+static void display_cb ( void )
 {
     char string [ 80 ] ;
 
@@ -299,7 +294,7 @@ void display_cb ( void )
     glutSwapBuffers();
 }
 
-void reshape_cb ( int width, int height )
+static void reshape_cb ( int width, int height )
 {
     float ar;
     glViewport ( 0, 0, width, height ) ;
@@ -316,7 +311,7 @@ void reshape_cb ( int width, int height )
 }
 
 
-void timer_cb ( int value )
+static void timer_cb ( int value )
 {
     /* Function called at regular intervals to update the positions of the points */
     double deltax, deltay, deltaz ;
@@ -388,4 +383,3 @@ int main ( int argc, char *argv[] )
 
     return 0 ;
 }
-
