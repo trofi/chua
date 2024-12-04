@@ -155,6 +155,9 @@ static void advance_in_time ( double time_step, double position[3], double new_p
 
 static void key_cb ( unsigned char key, int x, int y )
 {
+    (void)x;
+    (void)y;
+
     int i ;
     //char inputline [ INPUT_LINE_LENGTH ] ;
 
@@ -199,6 +202,9 @@ static void key_cb ( unsigned char key, int x, int y )
 
 static void special_cb ( int key, int x, int y )
 {
+    (void)x;
+    (void)y;
+
     switch ( key )
 	{
 	case GLUT_KEY_UP :  /* Rotate up a little */
@@ -231,10 +237,14 @@ static void special_cb ( int key, int x, int y )
 
 static void mouse_cb ( int button, int updown, int x, int y )
 {
+    (void)button;
+    (void)x;
+    (void)y;
+
     if ( updown == GLUT_DOWN )
 	{
 	    double dist = 1.0e20 ;  /* A very large number */
-	    dist = 0.0 ;  /* so we don't get "unused variable" compiler warning */
+	    (void)dist;
 	    /* The idea here is that we go into "pick" mode and pick the nearest point
 	       to the mouse click position.  Unfortunately I don't have the time to implement
 	       it at the moment. */
@@ -313,6 +323,8 @@ static void reshape_cb ( int width, int height )
 
 static void timer_cb ( int value )
 {
+    (void)value;
+
     /* Function called at regular intervals to update the positions of the points */
     double deltax, deltay, deltaz ;
     int new_index = array_index + 1 ;
