@@ -4,18 +4,19 @@ project('chua', 'c',
 
 cc = meson.get_compiler('c')
 
-# GL usually comes from libglvnd
-gl_dep = dependency('GL')
-# glu usually comes from mesa
-glu_dep = dependency('glu')
-# glut usually comes from freeglut
-glut_dep = dependency('glut')
-
-# -lm is tricky: https://mesonbuild.com/howtox.html#add-math-library-lm-portably
-m_dep = cc.find_library('m', required : false)
+dependencies = [
+  # GL usually comes from libglvnd
+  dependency('GL'),
+  # glu usually comes from mesa
+  dependency('glu'),
+  # glut usually comes from freeglut
+  dependency('glut'),
+  # -lm is tricky: https://mesonbuild.com/howtox.html#add-math-library-lm-portably
+  cc.find_library('m', required : false),
+]
 
 executable(
   'chua',
   sources : [ 'chua.c' ],
-  dependencies : [ gl_dep, glu_dep, glut_dep, m_dep ],
+  dependencies : dependencies,
   install : true)
